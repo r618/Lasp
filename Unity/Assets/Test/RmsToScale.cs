@@ -40,4 +40,23 @@ public class RmsToScale : MonoBehaviour
             for (var i = 0; i < data.Length; i++)
                 data[i] = 0;
     }
+
+	void OnGUI()
+	{
+		GUILayout.Space (10);
+
+		var _as = this.GetComponent<AudioSource> ();
+		if (_as)
+		{
+			var widthLayout = GUILayout.MaxWidth( Screen.width / 3 );
+
+			GUILayout.BeginHorizontal ();
+			GUILayout.Label ("Volume :", widthLayout);
+			_as.volume = GUILayout.HorizontalSlider (_as.volume, 0f, 1f, widthLayout);
+			GUILayout.Label(_as.volume.ToString(), widthLayout);
+			GUILayout.EndHorizontal ();
+
+			this.mute = GUILayout.Toggle (this.mute, "Mute");
+		}
+	}
 }
