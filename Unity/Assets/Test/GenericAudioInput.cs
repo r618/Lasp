@@ -16,7 +16,7 @@ public class GenericAudioInput : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.loop = true;
 
-#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
+#if UNITY_STANDALONE_OSX
 
         // Initialize the Lasp module.
         Lasp.Initialize();
@@ -35,16 +35,16 @@ public class GenericAudioInput : MonoBehaviour
         // Create a clip which is assigned to the default microphone.
         int minFreq, maxFreq;
         Microphone.GetDeviceCaps(null, out minFreq, out maxFreq);
-        audio.clip = Microphone.Start(null, true, 1, minFreq > 0 ? minFreq : 44100);
+        GetComponent<AudioSource>().clip = Microphone.Start(null, true, 1, minFreq > 0 ? minFreq : 44100);
 
-        if (audio.clip != null)
+        if (GetComponent<AudioSource>().clip != null)
         {
             // Wait until the microphone gets initialized.
             int delay = 0;
             while (delay <= 0) delay = Microphone.GetPosition(null);
 
             // Start playing.
-            audio.Play();
+            GetComponent<AudioSource>().Play();
 
             // Display some Info.
             var latency = 1000.0f * delay / sampleRate;
@@ -57,7 +57,7 @@ public class GenericAudioInput : MonoBehaviour
 #endif
     }
 
-#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
+#if UNITY_STANDALONE_OSX
 
     void OnAudioFilterRead(float[] data, int channels)
     {

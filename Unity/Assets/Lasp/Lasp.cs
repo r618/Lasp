@@ -2,7 +2,7 @@
 
 public static class Lasp
 {
-#if UNITY_STANDALONE_OSX && UNITY_PRO_LICENSE
+#if UNITY_STANDALONE_OSX
     [DllImport("Lasp", EntryPoint="LaspInitialize")]
     public static extern void Initialize();
 
